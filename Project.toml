@@ -1,7 +1,7 @@
 name = "MapBroadcast"
 uuid = "ebd9b9da-f48d-417c-9660-449667d60261"
 authors = ["ITensor developers <support@itensor.org> and contributors"]
-version = "0.1.4"
+version = "0.1.5"
 
 [deps]
 BlockArrays = "8e7c35d0-a365-5155-bbbb-fb81a777f24e"
