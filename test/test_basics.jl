@@ -1,8 +1,8 @@
 using Base.Broadcast: broadcasted
-using BroadcastMapConversion: Mapped, is_map_expr, mapped
+using MapBroadcast: Mapped, is_map_expr, mapped
 using Test: @inferred, @test, @test_throws, @testset
 
-@testset "BroadcastMapConversion (eltype=$elt)" for elt in (
+@testset "MapBroadcast (eltype=$elt)" for elt in (
   Float32, Float64, Complex{Float32}, Complex{Float64}
 )
   c = elt(2.2)
