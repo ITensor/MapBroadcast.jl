@@ -1,18 +1,18 @@
-using BroadcastMapConversion: BroadcastMapConversion
+using MapBroadcast: MapBroadcast
 using Documenter: Documenter, DocMeta, deploydocs, makedocs
 
 DocMeta.setdocmeta!(
-  BroadcastMapConversion, :DocTestSetup, :(using BroadcastMapConversion); recursive=true
+  MapBroadcast, :DocTestSetup, :(using MapBroadcast); recursive=true
 )
 
 include("make_index.jl")
 
 makedocs(;
-  modules=[BroadcastMapConversion],
+  modules=[MapBroadcast],
   authors="ITensor developers <support@itensor.org> and contributors",
-  sitename="BroadcastMapConversion.jl",
+  sitename="MapBroadcast.jl",
   format=Documenter.HTML(;
-    canonical="https://ITensor.github.io/BroadcastMapConversion.jl",
+    canonical="https://ITensor.github.io/MapBroadcast.jl",
     edit_link="main",
     assets=String[],
   ),
@@ -20,5 +20,5 @@ makedocs(;
 )
 
 deploydocs(;
-  repo="github.com/ITensor/BroadcastMapConversion.jl", devbranch="main", push_preview=true
+  repo="github.com/ITensor/MapBroadcast.jl", devbranch="main", push_preview=true
 )

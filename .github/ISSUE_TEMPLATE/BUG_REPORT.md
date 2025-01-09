@@ -1,6 +1,6 @@
 ---
-name: BroadcastMapConversion.jl bug report
-about: Create a bug report to help us improve BroadcastMapConversion.jl
+name: MapBroadcast.jl bug report
+about: Create a bug report to help us improve MapBroadcast.jl
 title: "[BUG] YOUR SHORT DESCRIPTION OF THE BUG HERE"
 labels: ["bug"]
 assignees: ''
@@ -55,8 +55,8 @@ If you provided a minimal code that demonstrates the bug or unexpected behavior,
 julia> versioninfo()
 [YOUR OUTPUT HERE]
 ```
- - Output from `using Pkg; Pkg.status("BroadcastMapConversion")`:
+ - Output from `using Pkg; Pkg.status("MapBroadcast")`:
 ```julia
-julia> using Pkg; Pkg.status("BroadcastMapConversion")
+julia> using Pkg; Pkg.status("MapBroadcast")
 [YOUR OUTPUT HERE]
 ```

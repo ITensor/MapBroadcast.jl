@@ -1,4 +1,4 @@
-using BroadcastMapConversion
+using MapBroadcast
 using BenchmarkTools
 
 SUITE = BenchmarkGroup()

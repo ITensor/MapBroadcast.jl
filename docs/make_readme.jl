@@ -1,9 +1,9 @@
 using Literate: Literate
-using BroadcastMapConversion: BroadcastMapConversion
+using MapBroadcast: MapBroadcast
 
 Literate.markdown(
-  joinpath(pkgdir(BroadcastMapConversion), "examples", "README.jl"),
-  joinpath(pkgdir(BroadcastMapConversion));
+  joinpath(pkgdir(MapBroadcast), "examples", "README.jl"),
+  joinpath(pkgdir(MapBroadcast));
   flavor=Literate.CommonMarkFlavor(),
   name="README",
 )

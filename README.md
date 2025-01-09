@@ -1,9 +1,9 @@
-# BroadcastMapConversion.jl
+# MapBroadcast.jl
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://ITensor.github.io/BroadcastMapConversion.jl/stable/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://ITensor.github.io/BroadcastMapConversion.jl/dev/)
-[![Build Status](https://github.com/ITensor/BroadcastMapConversion.jl/actions/workflows/Tests.yml/badge.svg?branch=main)](https://github.com/ITensor/BroadcastMapConversion.jl/actions/workflows/Tests.yml?query=branch%3Amain)
-[![Coverage](https://codecov.io/gh/ITensor/BroadcastMapConversion.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/ITensor/BroadcastMapConversion.jl)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://ITensor.github.io/MapBroadcast.jl/stable/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://ITensor.github.io/MapBroadcast.jl/dev/)
+[![Build Status](https://github.com/ITensor/MapBroadcast.jl/actions/workflows/Tests.yml/badge.svg?branch=main)](https://github.com/ITensor/MapBroadcast.jl/actions/workflows/Tests.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/ITensor/MapBroadcast.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/ITensor/MapBroadcast.jl)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
@@ -26,14 +26,14 @@ if you want to use SSH credentials, which can make it so you don't have to enter
 Then, the package can be added as usual through the package manager:
 
 ```julia
-julia> Pkg.add("BroadcastMapConversion")
+julia> Pkg.add("MapBroadcast")
 ```
 
 ## Examples
 
 ````julia
 using Base.Broadcast: broadcasted
-using BroadcastMapConversion: Mapped, mapped
+using MapBroadcast: Mapped, mapped
 using Test: @test
 
 a = randn(2, 2)

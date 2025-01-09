@@ -1,6 +1,6 @@
 ---
-name: BroadcastMapConversion.jl feature request
-about: Suggest an idea for BroadcastMapConversion.jl
+name: MapBroadcast.jl feature request
+about: Suggest an idea for MapBroadcast.jl
 title: "[ENHANCEMENT] YOUR SHORT DESCRIPTION OF THE FEATURE REQUEST HERE"
 labels: ["enhancement"]
 assignees: ''

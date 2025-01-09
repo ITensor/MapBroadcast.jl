@@ -1,4 +1,4 @@
-module BroadcastMapConversion
+module MapBroadcast
 # Convert broadcast call to map call by capturing array arguments
 # with `map_args` and creating a map function with `map_function`.
 # Logic from https://github.com/Jutho/Strided.jl/blob/v2.0.4/src/broadcast.jl.
