@@ -98,7 +98,7 @@ function promote_shape(ax, args::AbstractArray...)
   return promote_shape_tile(ax, args...)
 end
 function promote_shape_tile(common_axes, args::AbstractArray...)
-  return map(arg -> tile_to_shape(arg, common_axes), args)
+  return map(arg -> tile(arg, common_axes), args)
 end
 
 using BlockArrays: mortar
@@ -110,8 +110,9 @@ function extend(t::Tuple, value, length)
 end
 
 # Handles logic of expanding singleton dimensions
-# to match an array shape in broadcasting.
-function tile_to_shape(a::AbstractArray, ax)
+# to match an array shape in broadcasting
+# by tiling or repeating the input array.
+function tile(a::AbstractArray, ax)
   axes(a) == ax && return a
   # Must be one-based for now.
   @assert all(isone, first.(ax))
