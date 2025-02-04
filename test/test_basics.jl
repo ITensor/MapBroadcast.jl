@@ -1,4 +1,5 @@
-using Base.Broadcast: broadcasted
+using Base.Broadcast: Broadcasted, broadcasted
+using FillArrays: Fill
 using MapBroadcast: Mapped, is_map_expr, mapped
 using Test: @inferred, @test, @test_throws, @testset
 
@@ -47,4 +48,17 @@ using Test: @inferred, @test, @test_throws, @testset
     m = Mapped(bc)
     @test copy(m) == copy(bc)
   end
+end
+
+@testset "Scalar RHS" begin
+  # Emulates the `Broadcasted` expression that gets instantiated
+  # in expresions like `a .= 3` or `a .= 2 .+ 1`.
+  bc = Broadcasted(+, (2, 1), (Base.OneTo(2), Base.OneTo(2)))
+  m = @inferred Mapped(bc)
+  @test axes(m) === (Base.OneTo(2), Base.OneTo(2))
+  @test m.f === identity
+  @test only(m.args) === Fill(3, 2, 2)
+  dest = randn(2, 2)
+  copyto!(dest, m)
+  @test dest == Fill(3, 2, 2)
 end
