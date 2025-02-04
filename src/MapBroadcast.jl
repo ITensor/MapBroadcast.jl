@@ -5,7 +5,9 @@ module MapBroadcast
 
 using Base.Broadcast:
   Broadcast, BroadcastStyle, Broadcasted, broadcasted, combine_eltypes, instantiate
+using BlockArrays: mortar
 using Compat: allequal
+using FillArrays: Fill
 
 const WrappedScalarArgs = Union{AbstractArray{<:Any,0},Ref{<:Any}}
 
@@ -91,18 +93,20 @@ end
 
 # Promote the shape of the arguments to support broadcasting
 # over dimensions by expanding singleton dimensions.
-function promote_shape(ax, args::AbstractArray...)
+function promote_shape(ax, f, args::AbstractArray...)
   if allequal((ax, axes.(args)...))
-    return args
+    return f, args
   end
-  return promote_shape_tile(ax, args...)
+  return f, promote_shape_tile(ax, args...)
 end
 function promote_shape_tile(common_axes, args::AbstractArray...)
   return map(arg -> tile(arg, common_axes), args)
 end
 
-using BlockArrays: mortar
-using FillArrays: Fill
+# Catch the case of zero arguments, like `a .= 2`.
+function promote_shape(ax, f)
+  return identity, (Fill(f(), ax),)
+end
 
 # Extend by repeating value up to length.
 function extend(t::Tuple, value, length)
@@ -146,13 +150,13 @@ end
 function Mapped(::NotMapExpr, bc::Broadcasted)
   f = map_function(bc)
   ax = axes(bc)
-  args = promote_shape(ax, map_args(bc)...)
+  f, args = promote_shape(ax, f, map_args(bc)...)
   return Mapped(bc.style, f, args, ax)
 end
 function Mapped(::MapExpr, bc::Broadcasted)
   f = bc.f
   ax = axes(bc)
-  args = promote_shape(ax, bc.args...)
+  f, args = promote_shape(ax, f, bc.args...)
   return Mapped(bc.style, f, args, ax)
 end
 
