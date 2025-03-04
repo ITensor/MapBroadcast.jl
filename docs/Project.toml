@@ -1,4 +1,9 @@
 [deps]
-MapBroadcast = "ebd9b9da-f48d-417c-9660-449667d60261"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
+MapBroadcast = "ebd9b9da-f48d-417c-9660-449667d60261"
+
+[compat]
+Documenter = "1.8.1"
+Literate = "2.20.1"
+MapBroadcast = "0.1.7"
