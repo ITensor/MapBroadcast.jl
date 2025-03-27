@@ -1,9 +1,7 @@
 using MapBroadcast: MapBroadcast
 using Documenter: Documenter, DocMeta, deploydocs, makedocs
 
-DocMeta.setdocmeta!(
-  MapBroadcast, :DocTestSetup, :(using MapBroadcast); recursive=true
-)
+DocMeta.setdocmeta!(MapBroadcast, :DocTestSetup, :(using MapBroadcast); recursive=true)
 
 include("make_index.jl")
 
@@ -19,6 +17,4 @@ makedocs(;
   pages=["Home" => "index.md", "Reference" => "reference.md"],
 )
 
-deploydocs(;
-  repo="github.com/ITensor/MapBroadcast.jl", devbranch="main", push_preview=true
-)
+deploydocs(; repo="github.com/ITensor/MapBroadcast.jl", devbranch="main", push_preview=true)
