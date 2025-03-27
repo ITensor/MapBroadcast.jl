@@ -10,9 +10,11 @@ makedocs(;
   authors="ITensor developers <support@itensor.org> and contributors",
   sitename="MapBroadcast.jl",
   format=Documenter.HTML(;
-    canonical="https://ITensor.github.io/MapBroadcast.jl", edit_link="main", assets=String[]
+    canonical="https://itensor.github.io/MapBroadcast.jl",
+    edit_link="main",
+    assets=["assets/favicon.ico", "assets/extras.css"],
   ),
-  pages=["Home" => "index.md"],
+  pages=["Home" => "index.md", "Reference" => "reference.md"],
 )
 
 deploydocs(; repo="github.com/ITensor/MapBroadcast.jl", devbranch="main", push_preview=true)
