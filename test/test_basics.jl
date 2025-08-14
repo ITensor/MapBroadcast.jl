@@ -112,11 +112,18 @@ end
   @test arguments(s) ≡ (a1, a2)
   @test coefficients(s) ≡ (8 * one(elt), 12 * one(elt))
 
+  @test Summed(a1) + a2 ≡ Summed(a1) + Summed(a2)
+  @test Summed(a1) - a2 ≡ Summed(a1) - Summed(a2)
+  @test a1 + Summed(a2) ≡ Summed(a1) + Summed(a2)
+  @test a1 - Summed(a2) ≡ Summed(a1) - Summed(a2)
+
   s = 2 * Summed(a1) + 3 * Summed(a2)
   @test arguments(s) ≡ (a1, a2)
   @test coefficients(s) ≡ (2 * one(elt), 3 * one(elt))
   @test LinearCombination(s) ≡ LinearCombination((2 * one(elt), 3 * one(elt)))
+  @test Summed(s) ≡ s
   @test style(s) ≡ BroadcastStyle(typeof(a1))
+  @test BroadcastStyle(typeof(s)) ≡ BroadcastStyle(typeof(a1))
   @test axes(s) ≡ axes(a1)
   @test similar(s) isa typeof(a1)
   @test axes(similar(s)) ≡ axes(a1)
