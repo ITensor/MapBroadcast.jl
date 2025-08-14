@@ -1,6 +1,8 @@
-using Base.Broadcast: Broadcasted, broadcasted
+using Base.Broadcast:
+  BroadcastStyle, Broadcasted, broadcastable, broadcasted, materialize, materialize!
 using FillArrays: Fill
-using MapBroadcast: Mapped, is_map_expr, mapped
+using MapBroadcast:
+  LinearCombination, Mapped, Summed, arguments, coefficients, is_map_expr, mapped, style
 using Test: @inferred, @test, @test_throws, @testset
 
 @testset "MapBroadcast (eltype=$elt)" for elt in (
@@ -61,4 +63,80 @@ end
   dest = randn(2, 2)
   copyto!(dest, m)
   @test dest == Fill(3, 2, 2)
+end
+
+@testset "LinearCombination" begin
+  a1 = randn(2, 2)
+  a2 = randn(2, 2)
+  c1 = 2
+  c2 = 3
+  f = LinearCombination((c1, c2))
+  @test coefficients(f) ≡ (c1, c2)
+  @test f(a1, a2) ≈ c1 * a1 + c2 * a2
+end
+
+@testset "Summed" begin
+  elt = Float64
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
+
+  s = Summed(a1)
+  @test arguments(s) ≡ (a1,)
+  @test coefficients(s) ≡ (one(elt),)
+
+  s = -Summed(a1)
+  @test arguments(s) ≡ (a1,)
+  @test coefficients(s) ≡ (-one(elt),)
+
+  s = 2 * Summed(a1)
+  @test arguments(s) ≡ (a1,)
+  @test coefficients(s) ≡ (2 * one(elt),)
+
+  s = Summed(a1) * 2
+  @test arguments(s) ≡ (a1,)
+  @test coefficients(s) ≡ (2 * one(elt),)
+
+  s = Summed(a1) / 2
+  @test arguments(s) ≡ (a1,)
+  @test coefficients(s) ≡ (one(elt) / 2,)
+
+  s = 2 * Summed(a1) + 3 * Summed(a2)
+  @test arguments(s) ≡ (a1, a2)
+  @test coefficients(s) ≡ (2 * one(elt), 3 * one(elt))
+
+  s = 2 * Summed(a1) - 3 * Summed(a2)
+  @test arguments(s) ≡ (a1, a2)
+  @test coefficients(s) ≡ (2 * one(elt), -3 * one(elt))
+
+  s = 4 * (2 * Summed(a1) + 3 * Summed(a2))
+  @test arguments(s) ≡ (a1, a2)
+  @test coefficients(s) ≡ (8 * one(elt), 12 * one(elt))
+
+  s = 2 * Summed(a1) + 3 * Summed(a2)
+  @test arguments(s) ≡ (a1, a2)
+  @test coefficients(s) ≡ (2 * one(elt), 3 * one(elt))
+  @test LinearCombination(s) ≡ LinearCombination((2 * one(elt), 3 * one(elt)))
+  @test style(s) ≡ BroadcastStyle(typeof(a1))
+  @test axes(s) ≡ axes(a1)
+  @test similar(s) isa typeof(a1)
+  @test axes(similar(s)) ≡ axes(a1)
+  @test similar(s, Float32) isa typeof(similar(a1, Float32))
+  @test axes(similar(s, Float32)) ≡ axes(a1)
+  @test similar(s, Base.OneTo.((3, 3))) isa typeof(similar(a1))
+  @test axes(similar(s, Base.OneTo.((3, 3)))) ≡ Base.OneTo.((3, 3))
+  @test similar(s, Float32, Base.OneTo.((3, 3))) isa typeof(similar(a1, Float32))
+  @test axes(similar(s, Float32, Base.OneTo.((3, 3)))) ≡ Base.OneTo.((3, 3))
+  @test copy(s) ≈ 2 * a1 + 3 * a2
+  @test copyto!(similar(s), s) ≈ 2 * a1 + 3 * a2
+  @test s[1, 2] ≈ 2 * a1[1, 2] + 3 * a2[1, 2]
+
+  @test Broadcasted(s) isa Broadcasted
+  @test Broadcasted(s).style ≡ BroadcastStyle(typeof(a1))
+  @test Broadcasted(s).f ≡ LinearCombination(s)
+  @test Broadcasted(s).args ≡ (a1, a2)
+  @test similar(Broadcasted(s), Float32) isa typeof(similar(a1, Float32))
+  @test copy(Broadcasted(s)) ≈ 2 * a1 + 3 * a2
+  @test broadcastable(s) ≡ s
+  @test materialize(s) ≈ 2 * a1 + 3 * a2
+  @test materialize!(similar(s), s) ≈ 2 * a1 + 3 * a2
 end
