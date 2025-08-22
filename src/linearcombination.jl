@@ -7,7 +7,7 @@ function (f::LinearCombination)(args...)
   return mapreduce(*,+,coefficients(f),args)
 end
 
-struct Summed{Style,N,C<:NTuple{N},A<:NTuple{N}}
+struct Summed{Style,N,C<:NTuple{N,Any},A<:NTuple{N,Any}}
   style::Style
   coefficients::C
   arguments::A
