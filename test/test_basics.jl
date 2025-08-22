@@ -77,46 +77,71 @@ end
 
 @testset "Summed" begin
   elt = Float64
+
   a1 = randn(elt, 2, 2)
   a2 = randn(elt, 2, 2)
-
   s = Summed(a1)
   @test arguments(s) ≡ (a1,)
   @test coefficients(s) ≡ (one(elt),)
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = -Summed(a1)
   @test arguments(s) ≡ (a1,)
   @test coefficients(s) ≡ (-one(elt),)
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = 2 * Summed(a1)
   @test arguments(s) ≡ (a1,)
   @test coefficients(s) ≡ (2 * one(elt),)
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = Summed(a1) * 2
   @test arguments(s) ≡ (a1,)
   @test coefficients(s) ≡ (2 * one(elt),)
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = Summed(a1) / 2
   @test arguments(s) ≡ (a1,)
   @test coefficients(s) ≡ (one(elt) / 2,)
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = 2 * Summed(a1) + 3 * Summed(a2)
   @test arguments(s) ≡ (a1, a2)
   @test coefficients(s) ≡ (2 * one(elt), 3 * one(elt))
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = 2 * Summed(a1) - 3 * Summed(a2)
   @test arguments(s) ≡ (a1, a2)
   @test coefficients(s) ≡ (2 * one(elt), -3 * one(elt))
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = 4 * (2 * Summed(a1) + 3 * Summed(a2))
   @test arguments(s) ≡ (a1, a2)
   @test coefficients(s) ≡ (8 * one(elt), 12 * one(elt))
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   @test Summed(a1) + a2 ≡ Summed(a1) + Summed(a2)
   @test Summed(a1) - a2 ≡ Summed(a1) - Summed(a2)
   @test a1 + Summed(a2) ≡ Summed(a1) + Summed(a2)
   @test a1 - Summed(a2) ≡ Summed(a1) - Summed(a2)
 
+  # Regression test mixed types
+  a1 = [1, 2]
+  a2 = [1.0, 2.0]
+  s = Summed(a1) + Summed(a2)
+  @test arguments(s) ≡ (a1, a2)
+  @test coefficients(s) ≡ (1, 1.0)
+
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
   s = 2 * Summed(a1) + 3 * Summed(a2)
   @test arguments(s) ≡ (a1, a2)
   @test coefficients(s) ≡ (2 * one(elt), 3 * one(elt))
@@ -137,6 +162,9 @@ end
   @test copyto!(similar(s), s) ≈ 2 * a1 + 3 * a2
   @test s[1, 2] ≈ 2 * a1[1, 2] + 3 * a2[1, 2]
 
+  a1 = randn(elt, 2, 2)
+  a2 = randn(elt, 2, 2)
+  s = 2 * Summed(a1) + 3 * Summed(a2)
   @test Broadcasted(s) isa Broadcasted
   @test Broadcasted(s).style ≡ BroadcastStyle(typeof(a1))
   @test Broadcasted(s).f ≡ LinearCombination(s)
