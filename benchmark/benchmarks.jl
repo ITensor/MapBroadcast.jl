@@ -1,5 +1,5 @@
-using MapBroadcast
 using BenchmarkTools
+using MapBroadcast
 
 SUITE = BenchmarkGroup()
 SUITE["rand"] = @benchmarkable rand(10)
