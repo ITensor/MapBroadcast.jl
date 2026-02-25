@@ -1,6 +1,6 @@
 name = "MapBroadcast"
 uuid = "ebd9b9da-f48d-417c-9660-449667d60261"
-version = "0.1.19"
+version = "0.1.20"
 authors = ["ITensor developers <support@itensor.org> and contributors"]
 
 [deps]
