@@ -1,9 +1,10 @@
 using Documenter: Documenter, DocMeta, deploydocs, makedocs
+using ITensorFormatter: ITensorFormatter
 using MapBroadcast: MapBroadcast
 
 DocMeta.setdocmeta!(MapBroadcast, :DocTestSetup, :(using MapBroadcast); recursive = true)
 
-include("make_index.jl")
+ITensorFormatter.make_index!(pkgdir(MapBroadcast))
 
 makedocs(;
     modules = [MapBroadcast],
